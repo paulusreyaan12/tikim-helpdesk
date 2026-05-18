@@ -1032,7 +1032,18 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
   
-  // Start listening immediately so API routes (defined above) are available
+// ===============================
+// FRONTEND STATIC FILES
+// ===============================
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});  
+
+
+// Start listening immediately so API routes (defined above) are available
   // even while Vite is still initializing.
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
