@@ -9,7 +9,7 @@ import multer from "multer";
 import fs from "fs";
 
 const app = express();
-const PORT = 3001;
+const PORT = Number(process.env.PORT) || 3001;
 
 // Ensure upload directories exist
 const uploadDirs = ["uploads/pengaduan", "uploads/feedback", "uploads/ktp"];
