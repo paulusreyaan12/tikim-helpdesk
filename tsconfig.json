@@ -4,11 +4,12 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "allowJs": true,
     "strict": false,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
+    "allowJs": true,
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "server.ts"]
 }
