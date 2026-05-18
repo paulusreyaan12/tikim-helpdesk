@@ -50,7 +50,7 @@ import {
   AreaChart,
   Area
 } from 'recharts';
-import { User as UserType, Ticket, TicketMessage, Category, SLAPolicy } from './types';
+import { User as UserType, Ticket, TicketMessage, Category, SLAPolicy } from './types.js';
 
 // --- Components ---
 
