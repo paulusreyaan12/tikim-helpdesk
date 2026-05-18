@@ -319,7 +319,7 @@ export default function App() {
     e.preventDefault();
     setLoading(true);
     try {
-            if (!selectedKtpFile) {
+            if (complaintType === 'EXTERNAL' && !selectedKtpFile) {
               alert("File KTP wajib diupload.");
               return;
             }
@@ -742,8 +742,7 @@ export default function App() {
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-sm font-bold text-blue-50 ml-1">Upload Bukti (Opsional)</label>
-                    <label className="text-sm font-bold text-blue-50 ml-1">Lampiran Dokumen (Opsional - Maks 5MB)</label>
+                    <label className="text-sm font-bold text-blue-50 ml-1">Upload Bukti (Opsional - Maks 5MB)</label>
                     <div className="relative group">
                       <input 
                         type="file" 
