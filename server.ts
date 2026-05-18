@@ -1055,4 +1055,18 @@ app.get("*", (req, res) => {
   }
 }
 
+import { createServer } from "http";
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
+const server = createServer(app);
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 startServer();
