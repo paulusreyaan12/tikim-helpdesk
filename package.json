@@ -2,10 +2,9 @@
   "name": "react-example",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-     "build": "vite build && tsc server.ts --outDir dist --module commonjs --target es2022 --esModuleInterop",
+    "build": "vite build && tsc server.ts --outDir dist --module commonjs --target es2022 --esModuleInterop",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
