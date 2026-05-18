@@ -2,16 +2,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 import "dotenv/config";
 import express from "express";
-import { createServer as createViteServer } from "vite";
 import mysql from "mysql2/promise";
 import path from "path";
-import { fileURLToPath } from "url";
 import ExcelJS from "exceljs";
 import multer from "multer";
 import fs from "fs";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 3001;
@@ -1020,64 +1015,22 @@ app.all("/api/*", (req, res) => {
 // --- VITE MIDDLEWARE ---
 
 async function startServer() {
-  // Start DB initialization in background
+  // init database
   initDb();
 
-  const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+  // serve frontend build
+  app.use(express.static(path.join(process.cwd(), "dist")));
 
-app.use(express.static(path.join(__dirname, "dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});
-  
-// ===============================
-// FRONTEND STATIC FILES
-// ===============================
-
-app.use(express.static(path.join(__dirname, "dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
-});  
-
-
-// Start listening immediately so API routes (defined above) are available
-  // even while Vite is still initializing.
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "dist", "index.html"));
   });
 
-  if (process.env.NODE_ENV !== "production") {
-    console.log("Initializing Vite middleware...");
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-    console.log("Vite middleware ready.");
-  } else {
-    const distPath = path.join(__dirname, "dist");
-    app.use(express.static(distPath));
-    app.get("*", (req, res) =>
-      res.sendFile(path.join(distPath, "index.html"))
-    );
-  }
+  // start server
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
 
-import { createServer } from "http";
-
-app.use(express.static(path.join(process.cwd(), 'dist')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'dist', 'index.html'));
-});
-
-const server = createServer(app);
-
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+startServer();
 
 startServer();
