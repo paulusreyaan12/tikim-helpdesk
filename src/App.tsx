@@ -777,6 +777,7 @@ export default function App() {
                     </div>
                   </div>
 
+                {complaintType === 'EXTERNAL' && (
                   <div className="space-y-2 mt-4">
                     <label className="text-sm font-bold text-blue-50 ml-1">
                       Upload KTP (Wajib)
@@ -833,7 +834,7 @@ export default function App() {
                     </label>
                   </div>
                 </div>
-
+              )}
                   <Button type="submit" size="lg" className="w-full mt-4" disabled={loading}>
                     {loading ? 'Mengirim...' : 'Simpan Tiket Pengaduan'}
                   </Button>
