@@ -78,7 +78,7 @@ const pool = mysql.createPool({
   port: parseInt(process.env.MYSQLPORT || "3306"),
   user: process.env.MYSQLUSER,
   password: process.env.MYSQLPASSWORD,
-database: process.env.MYSQLDATABASE,
+  database: process.env.MYSQLDATABASE,
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
@@ -1023,6 +1023,15 @@ async function startServer() {
   // Start DB initialization in background
   initDb();
 
+  const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, "dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+  
   // Start listening immediately so API routes (defined above) are available
   // even while Vite is still initializing.
   app.listen(PORT, "0.0.0.0", () => {
