@@ -22,21 +22,26 @@ uploadDirs.forEach(dir => {
 // Configure Multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let dest = "uploads/pengaduan";
+    let dest = path.join(process.cwd(), "uploads/pengaduan");
+
     if (req.path.includes("feedback")) {
-      dest = "uploads/feedback";
+      dest = path.join(process.cwd(), "uploads/feedback");
     }
+
     if (file.fieldname === "ktp_file") {
-      dest = "uploads/ktp";
+      dest = path.join(process.cwd(), "uploads/ktp");
     }
+
     cb(null, dest);
   },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
 
+  filename: (req, file, cb) => {
+    const uniqueSuffix =
+      Date.now() + "-" + Math.round(Math.random() * 1e9);
+
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  },
+});
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
@@ -52,7 +57,7 @@ const upload = multer({
 });
 
 // serve uploads statically
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // --- LOGGING MIDDLEWARE ---
 app.use((req, res, next) => {
