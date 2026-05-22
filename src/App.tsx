@@ -945,7 +945,7 @@ export default function App() {
                         {trackResult.feedbacks[0].file_path && (
                           <div className="flex justify-start">
                             <a 
-                              href={`/${trackResult.feedbacks[0].file_path}`} 
+                              href={`${window.location.origin}${trackResult.feedbacks[0].file_path}`} 
                               target="_blank" 
                               rel="noreferrer"
                               className="flex items-center gap-3 bg-white/20 hover:bg-white/30 text-white px-5 py-3 rounded-xl font-bold text-sm transition-all border border-white/30"
