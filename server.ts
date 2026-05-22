@@ -42,6 +42,7 @@ const storage = multer.diskStorage({
     cb(null, uniqueSuffix + path.extname(file.originalname));
   },
 });
+
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
@@ -624,11 +625,16 @@ app.post("/api/tickets/:id/feedback", upload.single('feedback_file'), async (req
       return res.status(400).json({ message: "Catatan hasil wajib diisi." });
     }
 
+    // URL file feedback
+    const feedbackPath = file
+      ? `/uploads/feedback/${file.filename}`
+      : null;
+
     // Insert feedback
     await pool.query(`
       INSERT INTO ticket_feedback (ticket_id, note, file_path, created_by)
       VALUES (?, ?, ?, ?)
-    `, [req.params.id, note, file ? file.path : null, user_id]);
+    `, [req.params.id, note, feedbackPath, user_id]);
 
     // Update ticket status if provided
     if (status) {
